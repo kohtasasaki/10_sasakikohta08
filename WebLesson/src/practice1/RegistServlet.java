@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 public class RegistServlet extends HttpServlet{
 	protected void service(HttpServletRequest req,HttpServletResponse res)
-		throws ServletException,IOException{
+			throws ServletException,IOException{
 		req.setCharacterEncoding("UTF-8");
 
 		String english = req.getParameter("english");
@@ -19,10 +19,10 @@ public class RegistServlet extends HttpServlet{
 		ArrayList<Word> words = new ArrayList<>();
 
 		Word wd = new Word(english,japanese);
-        words.add(wd);
+		words.add(wd);
 
-        WordDAO dao = new WordDAO();
-        dao.registWords(words);
+		WordDAO dao = new WordDAO();
+		dao.registWords(words);
 
 
 		req.setAttribute("english", english);
@@ -34,21 +34,20 @@ public class RegistServlet extends HttpServlet{
 
 
 
-//データベースの総件数を表示する
-	      java.util.List<Word> wList = new ArrayList<>();
-	      wList = dao.getWords();
-
-	      int total = 0;
-	      for(Word wl : wList){
-	    	  total++;
-	      }
-
-		session.setAttribute("total",total);
+		//データベースの総件数を表示する
+		java.util.List<Word> wList = new ArrayList<>();
+		wList = dao.getWords();
+		int saveCount = dao.registWords(words);
 
 
+		int total = 0;
+		for(Word wl : wList){
+			total++;
+		}
 
+			req.setAttribute("registCount",saveCount);
+			req.setAttribute("total",total);
+			req.getRequestDispatcher("result.jsp").forward(req, res);
 
-
-		req.getRequestDispatcher("result.jsp").forward(req, res);
 	}
 }
