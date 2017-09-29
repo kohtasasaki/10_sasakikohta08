@@ -33,7 +33,6 @@ public class RegistServlet extends HttpServlet{
 		session.setAttribute("japanese", req.getParameter("japanese"));
 
 
-
 		//データベースの総件数を表示する
 		java.util.List<Word> wList = new ArrayList<>();
 		wList = dao.getWords();
@@ -44,6 +43,10 @@ public class RegistServlet extends HttpServlet{
 		for(Word wl : wList){
 			total++;
 		}
+
+		session.setAttribute("total", total);
+		session.setAttribute("registCount", saveCount);
+
 
 			req.setAttribute("registCount",saveCount);
 			req.setAttribute("total",total);
